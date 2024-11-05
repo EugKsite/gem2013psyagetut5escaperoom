@@ -1,135 +1,249 @@
-// Function to start the game and show the first room
-function startGame() {
-    document.getElementById("room-content").style.display = "block";
-    loadRoom(1); // Start with Room 1
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Escape Room: Gerontology Concepts</title>
+    <script>
+        let currentRoom = 1;
 
-// Function to load the content for each room based on the room number
-function loadRoom(roomNumber) {
-    const roomContent = document.getElementById("room-content");
+        function startGame() {
+            loadRoom(currentRoom);
+        }
 
-    if (roomNumber === 1) {
-        // Room 1: Bottom-Up Approach
-        roomContent.innerHTML = `
-            <h2>Room 1: Bottom-Up Approach</h2>
-            <p>To enter the center, select the programs or features that reflect the Bottom-Up Approach:</p>
-            <div>
-                <label><input type="checkbox" id="option1"> Physical exercise programs for seniors</label><br>
-                <label><input type="checkbox" id="option2"> Government policy on senior subsidies</label><br>
-                <label><input type="checkbox" id="option3"> Community-led art workshops</label><br>
-                <label><input type="checkbox" id="option4"> National guidelines for senior care</label><br>
-            </div>
-            <button onclick="validateRoom1()">Submit Answer</button>
-        `;
-    } else if (roomNumber === 2) {
-        // Room 2: Top-Down Approach
-        roomContent.innerHTML = `
-            <h2>Room 2: Top-Down Approach</h2>
-            <p>Identify the top-down policies implemented at the national level for seniors' well-being.</p>
-            <input type="text" id="room2Answer" placeholder="Enter your answer">
-            <button onclick="validateRoom2()">Submit Answer</button>
-            <p>Hint: Think about government-led initiatives in Singapore, like grants and schemes for elder care.</p>
-        `;
-    } else if (roomNumber === 3) {
-        // Room 3: Integrated Approach
-        roomContent.innerHTML = `
-            <h2>Room 3: Integrated Approach</h2>
-            <p>Match these two lists to show how public, private, and community efforts come together:</p>
-            <div>
-                <select id="publicChoice">
-                    <option value="">Select Public Initiative</option>
-                    <option value="Grants for elder-friendly facilities">Grants for elder-friendly facilities</option>
-                </select>
-                <select id="privateChoice">
-                    <option value="">Select Private Initiative</option>
-                    <option value="Company-sponsored wellness programs">Company-sponsored wellness programs</option>
-                </select>
-                <select id="communityChoice">
-                    <option value="">Select Community Initiative</option>
-                    <option value="Volunteers supporting social activities">Volunteers supporting social activities</option>
-                </select>
-            </div>
-            <button onclick="validateRoom3()">Submit Answer</button>
-        `;
-    } else if (roomNumber === 4) {
-        // Room 4: Multiple Discrepancy Theory
-        roomContent.innerHTML = `
-            <h2>Room 4: Multiple Discrepancy Theory</h2>
-            <p>Identify which needs are satisfied or unsatisfied for an individual to enhance life satisfaction:</p>
-            <input type="text" id="room4Answer" placeholder="Enter needs (e.g., physical, social, psychological)">
-            <button onclick="validateRoom4()">Submit Answer</button>
-            <p>Hint: Think about how comparing different areas of life satisfaction (like health, relationships) applies here.</p>
-        `;
-    } else if (roomNumber === 5) {
-        // Room 5: Social Comparison Theory
-        roomContent.innerHTML = `
-            <h2>Room 5: Social Comparison Theory</h2>
-            <p>Enter a reason why social comparison might affect a senior’s well-being. Consider how comparing with others can impact emotions.</p>
-            <input type="text" id="room5Answer" placeholder="Enter your answer">
-            <button onclick="validateRoom5()">Submit Answer</button>
-            <p>Hint: Think about how seeing others’ success or struggles might affect a person’s view on aging.</p>
-        `;
-    }
-}
+        function loadRoom(roomNumber) {
+            const roomContent = document.getElementById("room-content");
 
-// Room 1 Validation
-function validateRoom1() {
-    const option1 = document.getElementById("option1").checked;
-    const option2 = document.getElementById("option2").checked;
-    const option3 = document.getElementById("option3").checked;
-    const option4 = document.getElementById("option4").checked;
+            // Clear existing content
+            roomContent.innerHTML = "";
 
-    if (option1 && option3 && !option2 && !option4) {
-        alert("Correct! Proceeding to Room 2.");
-        loadRoom(2);
-    } else {
-        alert("Incorrect selection. Try again.");
-    }
-}
+            if (roomNumber === 1) {
+                // Room 1: Bottom-Up and Top-Down Sorting Activity
+                roomContent.innerHTML = `
+                    <h2>Room 1: Bottom-Up and Top-Down Approach</h2>
+                    <p>Sort the following activities into 'Bottom-Up' and 'Top-Down' approaches:</p>
+                    <div>
+                        <div class="activity" draggable="true">Participating in community events</div>
+                        <div class="activity" draggable="true">Government health policies</div>
+                        <div class="activity" draggable="true">Individual health assessments</div>
+                        <div class="activity" draggable="true">National aging strategy</div>
+                        <div class="activity" draggable="true">Peer support groups</div>
+                        <div class="activity" draggable="true">Training programs for caregivers</div>
+                        <div class="activity" draggable="true">Research studies on aging</div>
+                        <div class="activity" draggable="true">Senior citizen advocacy initiatives</div>
+                    </div>
+                    <h3>Drop Zone:</h3>
+                    <div class="drop-zone" id="bottom-up" ondrop="drop(event, 'bottom-up')" ondragover="allowDrop(event)">Bottom-Up</div>
+                    <div class="drop-zone" id="top-down" ondrop="drop(event, 'top-down')" ondragover="allowDrop(event)">Top-Down</div>
+                    <button onclick="validateRoom1()">Submit Answers</button>
+                `;
+                addDragAndDropListeners();
+            } else if (roomNumber === 2) {
+                // Room 2: Top-Down Approach with Larger Input Box
+                roomContent.innerHTML = `
+                    <h2>Room 2: Top-Down Approach</h2>
+                    <p>Enter a government initiative related to senior support in Singapore from the following site: <a href="https://supportgowhere.life.gov.sg/categories/seniors" target="_blank">Seniors Support</a></p>
+                    <textarea id="inputRoom2" rows="4" cols="50" placeholder="Type your answer here..."></textarea>
+                    <button onclick="validateRoom2()">Submit Answer</button>
+                `;
+            } else if (roomNumber === 3) {
+                // Room 3: Integrated Approach with More Dropdown Options
+                roomContent.innerHTML = `
+                    <h2>Room 3: Integrated Approach</h2>
+                    <p>Select the most appropriate response for each category:</p>
+                    <div>
+                        <label for="integrated1">Health Services:</label>
+                        <select id="integrated1">
+                            <option value="">--Select--</option>
+                            <option value="Home care services">Home care services</option>
+                            <option value="Community health screenings">Community health screenings</option>
+                            <option value="Telehealth consultations">Telehealth consultations</option>
+                            <option value="Rehabilitation programs">Rehabilitation programs</option>
+                            <option value="Nursing home care">Nursing home care</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="integrated2">Social Support:</label>
+                        <select id="integrated2">
+                            <option value="">--Select--</option>
+                            <option value="Support groups">Support groups</option>
+                            <option value="Volunteer programs">Volunteer programs</option>
+                            <option value="Family care initiatives">Family care initiatives</option>
+                            <option value="Community centers">Community centers</option>
+                            <option value="Public outreach programs">Public outreach programs</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="integrated3">Wellness Programs:</label>
+                        <select id="integrated3">
+                            <option value="">--Select--</option>
+                            <option value="Exercise classes">Exercise classes</option>
+                            <option value="Nutrition workshops">Nutrition workshops</option>
+                            <option value="Mental health seminars">Mental health seminars</option>
+                            <option value="Art therapy sessions">Art therapy sessions</option>
+                            <option value="Meditation retreats">Meditation retreats</option>
+                        </select>
+                    </div>
+                    <button onclick="validateRoom3()">Submit Answer</button>
+                `;
+            } else if (roomNumber === 4) {
+                // Room 4: Multiple Discrepancy Theory with More Input Options
+                roomContent.innerHTML = `
+                    <h2>Room 4: Multiple Discrepancy Theory</h2>
+                    <p>Consider the following scenario:</p>
+                    <p>Ms. Tan, an 80-year-old woman, lives alone and is feeling isolated. She used to enjoy attending community events but has stopped going. Recently, her family has been very busy and unable to visit her. Reflect on how her life satisfaction may be impacted by various discrepancies.</p>
+                    
+                    <p>Describe at least 3 discrepancies that may affect Ms. Tan's life satisfaction:</p>
+                    <textarea id="inputRoom4" rows="4" cols="50" placeholder="Type your answer here..."></textarea>
+                    <button onclick="validateRoom4()">Submit Answer</button>
+                `;
+            } else if (roomNumber === 5) {
+                // Room 5: Social Comparison Theory with More Input Options
+                roomContent.innerHTML = `
+                    <h2>Room 5: Social Comparison Theory</h2>
+                    <p>Mr. Lim is a 75-year-old retiree who often compares his life to that of his friends. He feels he is not doing as well as they are. As a result, he sometimes feels inadequate and unhappy.</p>
+                    
+                    <p>What are the potential effects of social comparison on Mr. Lim's well-being? Please provide a detailed response:</p>
+                    <textarea id="inputRoom5" rows="4" cols="50" placeholder="Type your answer here..."></textarea>
+                    <button onclick="validateRoom5()">Submit Answer</button>
+                `;
+            }
+        }
 
-// Room 2 Validation
-function validateRoom2() {
-    const answer = document.getElementById("room2Answer").value.toLowerCase();
-    if (answer.includes("policy") || answer.includes("initiative")) {
-        alert("Correct! Proceeding to Room 3.");
-        loadRoom(3);
-    } else {
-        alert("Incorrect. Think about government-led policies for elder care.");
-    }
-}
+        // Drag and Drop Logic for Room 1
+        function allowDrop(event) {
+            event.preventDefault();
+        }
 
-// Room 3 Validation
-function validateRoom3() {
-    const publicChoice = document.getElementById("publicChoice").value;
-    const privateChoice = document.getElementById("privateChoice").value;
-    const communityChoice = document.getElementById("communityChoice").value;
+        function drag(event) {
+            event.dataTransfer.setData("text", event.target.innerText);
+        }
 
-    if (publicChoice && privateChoice && communityChoice) {
-        alert("Correct! Moving to Room 4.");
-        loadRoom(4);
-    } else {
-        alert("Please select an initiative from each category.");
-    }
-}
+        function drop(event, target) {
+            event.preventDefault();
+            const data = event.dataTransfer.getData("text");
+            const dropZone = document.getElementById(target);
+            const item = document.createElement("div");
+            item.className = "dropped-item";
+            item.innerText = data;
+            dropZone.appendChild(item);
+        }
 
-// Room 4 Validation
-function validateRoom4() {
-    const answer = document.getElementById("room4Answer").value.toLowerCase();
-    if (answer.includes("physical") || answer.includes("social") || answer.includes("psychological")) {
-        alert("Correct! Entering Room 5.");
-        loadRoom(5);
-    } else {
-        alert("Incorrect. Think about different types of needs for life satisfaction.");
-    }
-}
+        function addDragAndDropListeners() {
+            const activities = document.querySelectorAll(".activity");
+            activities.forEach(activity => {
+                activity.addEventListener("dragstart", drag);
+            });
+        }
 
-// Room 5 Validation
-function validateRoom5() {
-    const answer = document.getElementById("room5Answer").value.toLowerCase();
-    if (answer.includes("comparison") || answer.includes("self-esteem") || answer.includes("well-being")) {
-        alert("Congratulations! You've completed the escape room and saved the seniors!");
-        document.getElementById("room-content").innerHTML = "<h2>Congratulations!</h2><p>You have successfully navigated all rooms and rescued everyone!</p>";
-    } else {
-        alert("Incorrect. Think about the impact of comparing oneself to others.");
-    }
-}
+        // Room 1 Validation
+        function validateRoom1() {
+            const bottomUpActivities = document.getElementById("bottom-up").children;
+            const topDownActivities = document.getElementById("top-down").children;
+
+            const correctBottomUp = ["Participating in community events", "Individual health assessments", "Peer support groups", "Research studies on aging"];
+            const correctTopDown = ["Government health policies", "National aging strategy", "Training programs for caregivers", "Senior citizen advocacy initiatives"];
+
+            let bottomUpCorrect = true;
+            let topDownCorrect = true;
+
+            for (let activity of bottomUpActivities) {
+                if (!correctBottomUp.includes(activity.innerText)) {
+                    bottomUpCorrect = false;
+                    break;
+                }
+            }
+
+            for (let activity of topDownActivities) {
+                if (!correctTopDown.includes(activity.innerText)) {
+                    topDownCorrect = false;
+                    break;
+                }
+            }
+
+            if (bottomUpCorrect && topDownCorrect) {
+                alert("Congratulations! You've sorted the activities correctly. Entering Room 2.");
+                loadRoom(2);
+            } else {
+                alert("Great effort! Remember to think about which activities belong to each approach. Try again!");
+            }
+        }
+
+        // Room 2 Validation
+        function validateRoom2() {
+            const answer = document.getElementById("inputRoom2").value.toLowerCase();
+            const validAnswers = [
+                "active ageing grant",
+                "community health assist scheme",
+                "senior services grant",
+                "senior activity centres",
+                "elderly care services",
+                "financial assistance for seniors"
+                // Add more answers as needed
+            ];
+
+            if (validAnswers.some(validAnswer => answer.includes(validAnswer))) {
+                alert("Congratulations! You've identified a valid initiative. Entering Room 3.");
+                loadRoom(3);
+            } else {
+                alert("Keep searching! Try to find a relevant government initiative related to senior support.");
+            }
+        }
+
+        // Room 3 Validation
+        function validateRoom3() {
+            const selected1 = document.getElementById("integrated1").value;
+            const selected2 = document.getElementById("integrated2").value;
+            const selected3 = document.getElementById("integrated3").value;
+
+            const correctAnswers = {
+                integrated1: "Home care services",
+                integrated2: "Support groups",
+                integrated3: "Exercise classes"
+            };
+
+            if (selected1 === correctAnswers.integrated1 &&
+                selected2 === correctAnswers.integrated2 &&
+                selected3 === correctAnswers.integrated3) {
+                alert("Congratulations! You've made the correct selections. Entering Room 4.");
+                loadRoom(4);
+            } else {
+                alert("You're on the right track! Review your selections and try again.");
+            }
+        }
+
+        // Room 4 Validation
+        function validateRoom4() {
+            const answer = document.getElementById("inputRoom4").value;
+            // Check for at least 3 discrepancies mentioned
+            const discrepancies = answer.split(/\n+/).filter(Boolean);
+            if (discrepancies.length >= 3) {
+                alert("Congratulations! You've identified relevant discrepancies. Entering Room 5.");
+                loadRoom(5);
+            } else {
+                alert("Nice try! Make sure to mention at least 3 discrepancies affecting Ms. Tan's satisfaction.");
+            }
+        }
+
+        // Room 5 Validation
+        function validateRoom5() {
+            const answer = document.getElementById("inputRoom5").value.toLowerCase();
+            if (answer.length > 0) {
+                alert("Congratulations! You've explored the effects of social comparison. Well done!");
+                // Optionally: load a completion screen or message
+            } else {
+                alert("Don't forget to share your thoughts! Try again.");
+            }
+        }
+
+        window.onload = startGame;
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Escape Room: Gerontology Concepts</h1>
+        <div id="room-content"></div>
+    </div>
+</body>
+</html>
