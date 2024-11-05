@@ -5,6 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Escape Room: Gerontology Concepts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        .drop-zone {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            margin: 10px 0;
+        }
+        .activity {
+            padding: 10px;
+            margin: 5px;
+            background-color: #e7e7e7;
+            cursor: move;
+        }
+        .dropped-item {
+            margin: 5px;
+            padding: 5px;
+            background-color: #d3ffd3;
+        }
+    </style>
     <script>
         let currentRoom = 1;
 
