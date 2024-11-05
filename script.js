@@ -22,6 +22,7 @@
                 // Room 1: Bottom-Up and Top-Down Sorting Activity
                 roomContent.innerHTML = `
                     <h2>Room 1: Bottom-Up and Top-Down Approach</h2>
+                    <img src="https://via.placeholder.com/400" alt="Room 1 Image" />
                     <p>Sort the following activities into 'Bottom-Up' and 'Top-Down' approaches:</p>
                     <div>
                         <div class="activity" draggable="true">Participating in community events</div>
@@ -43,6 +44,7 @@
                 // Room 2: Top-Down Approach with Larger Input Box
                 roomContent.innerHTML = `
                     <h2>Room 2: Top-Down Approach</h2>
+                    <img src="https://via.placeholder.com/400" alt="Room 2 Image" />
                     <p>Enter a government initiative related to senior support in Singapore from the following site: <a href="https://supportgowhere.life.gov.sg/categories/seniors" target="_blank">Seniors Support</a></p>
                     <textarea id="inputRoom2" rows="4" cols="50" placeholder="Type your answer here..."></textarea>
                     <button onclick="validateRoom2()">Submit Answer</button>
@@ -51,6 +53,7 @@
                 // Room 3: Integrated Approach with More Dropdown Options
                 roomContent.innerHTML = `
                     <h2>Room 3: Integrated Approach</h2>
+                    <img src="https://via.placeholder.com/400" alt="Room 3 Image" />
                     <p>Select the most appropriate response for each category:</p>
                     <div>
                         <label for="integrated1">Health Services:</label>
@@ -91,6 +94,7 @@
                 // Room 4: Multiple Discrepancy Theory with More Input Options
                 roomContent.innerHTML = `
                     <h2>Room 4: Multiple Discrepancy Theory</h2>
+                    <img src="https://via.placeholder.com/400" alt="Room 4 Image" />
                     <p>Consider the following scenario:</p>
                     <p>Ms. Tan, an 80-year-old woman, lives alone and is feeling isolated. She used to enjoy attending community events but has stopped going. Recently, her family has been very busy and unable to visit her. Reflect on how her life satisfaction may be impacted by various discrepancies.</p>
                     
@@ -102,6 +106,7 @@
                 // Room 5: Social Comparison Theory with More Input Options
                 roomContent.innerHTML = `
                     <h2>Room 5: Social Comparison Theory</h2>
+                    <img src="https://via.placeholder.com/400" alt="Room 5 Image" />
                     <p>Mr. Lim is a 75-year-old retiree who often compares his life to that of his friends. He feels he is not doing as well as they are. As a result, he sometimes feels inadequate and unhappy.</p>
                     
                     <p>What are the potential effects of social comparison on Mr. Lim's well-being? Please provide a detailed response:</p>
@@ -139,111 +144,73 @@
 
         // Room 1 Validation
         function validateRoom1() {
-            const bottomUpActivities = document.getElementById("bottom-up").children;
-            const topDownActivities = document.getElementById("top-down").children;
+            const bottomUpActivities = document.querySelectorAll("#bottom-up .dropped-item");
+            const topDownActivities = document.querySelectorAll("#top-down .dropped-item");
 
-            const correctBottomUp = ["Participating in community events", "Individual health assessments", "Peer support groups", "Research studies on aging"];
-            const correctTopDown = ["Government health policies", "National aging strategy", "Training programs for caregivers", "Senior citizen advocacy initiatives"];
+            let bottomUpCorrect = 0;
+            let topDownCorrect = 0;
 
-            let bottomUpCorrect = true;
-            let topDownCorrect = true;
-
-            for (let activity of bottomUpActivities) {
-                if (!correctBottomUp.includes(activity.innerText)) {
-                    bottomUpCorrect = false;
-                    break;
+            bottomUpActivities.forEach(activity => {
+                if (activity.innerText === "Participating in community events" ||
+                    activity.innerText === "Peer support groups" ||
+                    activity.innerText === "Individual health assessments" ||
+                    activity.innerText === "Training programs for caregivers") {
+                    bottomUpCorrect++;
                 }
-            }
+            });
 
-            for (let activity of topDownActivities) {
-                if (!correctTopDown.includes(activity.innerText)) {
-                    topDownCorrect = false;
-                    break;
+            topDownActivities.forEach(activity => {
+                if (activity.innerText === "Government health policies" ||
+                    activity.innerText === "National aging strategy" ||
+                    activity.innerText === "Research studies on aging" ||
+                    activity.innerText === "Senior citizen advocacy initiatives") {
+                    topDownCorrect++;
                 }
-            }
+            });
 
-            if (bottomUpCorrect && topDownCorrect) {
-                alert("Congratulations! You've sorted the activities correctly. Entering Room 2.");
-                loadRoom(2);
-            } else {
-                alert("Great effort! Remember to think about which activities belong to each approach. Try again!");
-            }
+            alert(`You got ${bottomUpCorrect} correct in Bottom-Up and ${topDownCorrect} correct in Top-Down!`);
+            currentRoom++;
+            loadRoom(currentRoom);
         }
 
         // Room 2 Validation
         function validateRoom2() {
-            const answer = document.getElementById("inputRoom2").value.toLowerCase();
-            const validAnswers = [
-                "active ageing grant",
-                "community health assist scheme",
-                "senior services grant",
-                "senior activity centres",
-                "elderly care services",
-                "financial assistance for seniors"
-                // Add more answers as needed
-            ];
-
-            if (validAnswers.some(validAnswer => answer.includes(validAnswer))) {
-                alert("Congratulations! You've identified a valid initiative. Entering Room 3.");
-                loadRoom(3);
-            } else {
-                alert("Keep searching! Try to find a relevant government initiative related to senior support.");
-            }
+            const input = document.getElementById("inputRoom2").value;
+            alert(`Your answer: ${input}`);
+            currentRoom++;
+            loadRoom(currentRoom);
         }
 
         // Room 3 Validation
         function validateRoom3() {
-            const selected1 = document.getElementById("integrated1").value;
-            const selected2 = document.getElementById("integrated2").value;
-            const selected3 = document.getElementById("integrated3").value;
-
-            const correctAnswers = {
-                integrated1: "Home care services",
-                integrated2: "Support groups",
-                integrated3: "Exercise classes"
-            };
-
-            if (selected1 === correctAnswers.integrated1 &&
-                selected2 === correctAnswers.integrated2 &&
-                selected3 === correctAnswers.integrated3) {
-                alert("Congratulations! You've made the correct selections. Entering Room 4.");
-                loadRoom(4);
-            } else {
-                alert("You're on the right track! Review your selections and try again.");
-            }
+            const integrated1 = document.getElementById("integrated1").value;
+            const integrated2 = document.getElementById("integrated2").value;
+            const integrated3 = document.getElementById("integrated3").value;
+            alert(`Your answers: ${integrated1}, ${integrated2}, ${integrated3}`);
+            currentRoom++;
+            loadRoom(currentRoom);
         }
 
         // Room 4 Validation
         function validateRoom4() {
-            const answer = document.getElementById("inputRoom4").value;
-            // Check for at least 3 discrepancies mentioned
-            const discrepancies = answer.split(/\n+/).filter(Boolean);
-            if (discrepancies.length >= 3) {
-                alert("Congratulations! You've identified relevant discrepancies. Entering Room 5.");
-                loadRoom(5);
-            } else {
-                alert("Nice try! Make sure to mention at least 3 discrepancies affecting Ms. Tan's satisfaction.");
-            }
+            const input = document.getElementById("inputRoom4").value;
+            alert(`Your answer: ${input}`);
+            currentRoom++;
+            loadRoom(currentRoom);
         }
 
         // Room 5 Validation
         function validateRoom5() {
-            const answer = document.getElementById("inputRoom5").value.toLowerCase();
-            if (answer.length > 0) {
-                alert("Congratulations! You've explored the effects of social comparison. Well done!");
-                // Optionally: load a completion screen or message
-            } else {
-                alert("Don't forget to share your thoughts! Try again.");
-            }
+            const input = document.getElementById("inputRoom5").value;
+            alert(`Your answer: ${input}`);
+            alert("Congratulations! You've completed all rooms!");
         }
 
         window.onload = startGame;
     </script>
 </head>
 <body>
-    <div class="container">
-        <h1>Escape Room: Gerontology Concepts</h1>
-        <div id="room-content"></div>
-    </div>
+    <h1>Welcome to the Escape Room: Gerontology Concepts</h1>
+    <div id="room-content"></div>
 </body>
 </html>
