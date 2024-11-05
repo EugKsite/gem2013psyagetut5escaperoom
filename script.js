@@ -144,73 +144,110 @@
 
         // Room 1 Validation
         function validateRoom1() {
-            const bottomUpActivities = document.querySelectorAll("#bottom-up .dropped-item");
-            const topDownActivities = document.querySelectorAll("#top-down .dropped-item");
+            const bottomUpActivities = document.getElementById("bottom-up").children;
+            const topDownActivities = document.getElementById("top-down").children;
 
-            let bottomUpCorrect = 0;
-            let topDownCorrect = 0;
+            const correctBottomUp = ["Participating in community events", "Individual health assessments", "Peer support groups", "Research studies on aging"];
+            const correctTopDown = ["Government health policies", "National aging strategy", "Training programs for caregivers", "Senior citizen advocacy initiatives"];
 
-            bottomUpActivities.forEach(activity => {
-                if (activity.innerText === "Participating in community events" ||
-                    activity.innerText === "Peer support groups" ||
-                    activity.innerText === "Individual health assessments" ||
-                    activity.innerText === "Training programs for caregivers") {
-                    bottomUpCorrect++;
+            let bottomUpCorrect = true;
+            let topDownCorrect = true;
+
+            for (let activity of bottomUpActivities) {
+                if (!correctBottomUp.includes(activity.innerText)) {
+                    bottomUpCorrect = false;
+                    break;
                 }
-            });
+            }
 
-            topDownActivities.forEach(activity => {
-                if (activity.innerText === "Government health policies" ||
-                    activity.innerText === "National aging strategy" ||
-                    activity.innerText === "Research studies on aging" ||
-                    activity.innerText === "Senior citizen advocacy initiatives") {
-                    topDownCorrect++;
+            for (let activity of topDownActivities) {
+                if (!correctTopDown.includes(activity.innerText)) {
+                    topDownCorrect = false;
+                    break;
                 }
-            });
+            }
 
-            alert(`You got ${bottomUpCorrect} correct in Bottom-Up and ${topDownCorrect} correct in Top-Down!`);
-            currentRoom++;
-            loadRoom(currentRoom);
+            if (bottomUpCorrect && topDownCorrect) {
+                alert("Congratulations! You've sorted the activities correctly. Entering Room 2.");
+                loadRoom(2);
+            } else {
+                alert("Great effort! Remember to think about which activities belong to each approach. Try again!");
+            }
         }
 
         // Room 2 Validation
         function validateRoom2() {
-            const input = document.getElementById("inputRoom2").value;
-            alert(`Your answer: ${input}`);
-            currentRoom++;
-            loadRoom(currentRoom);
+            const answer = document.getElementById("inputRoom2").value.toLowerCase();
+            const validAnswers = [
+                "senior friendly transport services",
+                "community mental health services",
+                "active aging programs",
+                "elderly day care services",
+                "digital literacy programs for seniors"
+                // Add more valid answers as needed based on the website content
+            ];
+
+            if (validAnswers.some(validAnswer => answer.includes(validAnswer))) {
+                alert("Congratulations! You've identified a relevant government initiative. Entering Room 3.");
+                loadRoom(3);
+            } else {
+                alert("You're on the right track! Check the website for initiatives and try again.");
+            }
         }
 
         // Room 3 Validation
         function validateRoom3() {
-            const integrated1 = document.getElementById("integrated1").value;
-            const integrated2 = document.getElementById("integrated2").value;
-            const integrated3 = document.getElementById("integrated3").value;
-            alert(`Your answers: ${integrated1}, ${integrated2}, ${integrated3}`);
-            currentRoom++;
-            loadRoom(currentRoom);
+            const selected1 = document.getElementById("integrated1").value;
+            const selected2 = document.getElementById("integrated2").value;
+            const selected3 = document.getElementById("integrated3").value;
+
+            const correctAnswers = {
+                integrated1: "Home care services",
+                integrated2: "Support groups",
+                integrated3: "Exercise classes"
+            };
+
+            if (selected1 === correctAnswers.integrated1 &&
+                selected2 === correctAnswers.integrated2 &&
+                selected3 === correctAnswers.integrated3) {
+                alert("Congratulations! You've made the correct selections. Entering Room 4.");
+                loadRoom(4);
+            } else {
+                alert("You're on the right track! Review your selections and try again.");
+            }
         }
 
         // Room 4 Validation
         function validateRoom4() {
-            const input = document.getElementById("inputRoom4").value;
-            alert(`Your answer: ${input}`);
-            currentRoom++;
-            loadRoom(currentRoom);
+            const answer = document.getElementById("inputRoom4").value;
+            // Check for at least 3 discrepancies mentioned
+            const discrepancies = answer.split(/\n+/).filter(Boolean);
+            if (discrepancies.length >= 3) {
+                alert("Congratulations! You've identified relevant discrepancies. Entering Room 5.");
+                loadRoom(5);
+            } else {
+                alert("Nice try! Make sure to mention at least 3 discrepancies affecting Ms. Tan's satisfaction.");
+            }
         }
 
         // Room 5 Validation
         function validateRoom5() {
-            const input = document.getElementById("inputRoom5").value;
-            alert(`Your answer: ${input}`);
-            alert("Congratulations! You've completed all rooms!");
+            const answer = document.getElementById("inputRoom5").value.toLowerCase();
+            if (answer.length > 0) {
+                alert("Congratulations! You've explored the effects of social comparison. Well done!");
+                // Optionally: load a completion screen or message
+            } else {
+                alert("Don't forget to share your thoughts! Try again.");
+            }
         }
 
         window.onload = startGame;
     </script>
 </head>
 <body>
-    <h1>Welcome to the Escape Room: Gerontology Concepts</h1>
-    <div id="room-content"></div>
+    <div class="container">
+        <h1>Escape Room: Gerontology Concepts</h1>
+        <div id="room-content"></div>
+    </div>
 </body>
 </html>
