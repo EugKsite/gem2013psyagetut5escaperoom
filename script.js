@@ -2,48 +2,46 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Escape Room: Gerontology Concepts</title>
+    <title>Gerontology Escape Room</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background-color: #f4f4f4;
-            margin: 0;
+            background-color: #f0f8ff;
+            color: #333;
             padding: 20px;
         }
-        h1 {
-            color: #333;
+        h1, h2 {
+            color: #2f4f4f;
+        }
+        .room-container {
+            margin-top: 20px;
         }
         button {
             padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
             font-size: 16px;
-            margin-top: 20px;
             cursor: pointer;
+            border-radius: 5px;
         }
-        .drop-zone {
-            border: 2px dashed #ccc;
-            padding: 20px;
-            margin: 10px 0;
+        button:hover {
+            background-color: #45a049;
         }
-        .activity {
-            padding: 10px;
-            margin: 5px;
-            background-color: #e7e7e7;
-            cursor: move;
-        }
-        .dropped-item {
-            margin: 5px;
-            padding: 5px;
-            background-color: #d3ffd3;
+        .result {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #d9534f;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Escape Room: Gerontology Concepts</h1>
-        <div id="room-content"></div>
-    </div>
+    <h1>Welcome to the Gerontology Escape Room</h1>
+    <p>Click the button below to start your journey through the five rooms.</p>
+    <button onclick="startGame()">Start</button>
+    
+    <div id="room-content" class="room-container"></div>
 
     <script>
         let currentRoom = 1;
@@ -54,159 +52,105 @@
 
         function loadRoom(roomNumber) {
             const roomContent = document.getElementById("room-content");
-            roomContent.innerHTML = "";  // Clear existing content
+            roomContent.innerHTML = "";  // Clears previous content
 
+            // Load content based on the room number
             if (roomNumber === 1) {
                 roomContent.innerHTML = `
                     <h2>Room 1: Bottom-Up and Top-Down Approach</h2>
-                    <p>Sort the following activities into 'Bottom-Up' and 'Top-Down' approaches:</p>
-                    <div>
-                        <div class="activity" draggable="true" ondragstart="drag(event)">Participating in community events</div>
-                        <div class="activity" draggable="true" ondragstart="drag(event)">Government health policies</div>
-                        <div class="activity" draggable="true" ondragstart="drag(event)">Individual health assessments</div>
-                        <div class="activity" draggable="true" ondragstart="drag(event)">National aging strategy</div>
-                        <div class="activity" draggable="true" ondragstart="drag(event)">Peer support groups</div>
-                        <div class="activity" draggable="true" ondragstart="drag(event)">Training programs for caregivers</div>
-                        <div class="activity" draggable="true" ondragstart="drag(event)">Research studies on aging</div>
-                        <div class="activity" draggable="true" ondragstart="drag(event)">Senior citizen advocacy initiatives</div>
-                    </div>
-                    <h3>Drop Zone:</h3>
-                    <div class="drop-zone" id="bottom-up" ondrop="drop(event, 'bottom-up')" ondragover="allowDrop(event)">Bottom-Up</div>
-                    <div class="drop-zone" id="top-down" ondrop="drop(event, 'top-down')" ondragover="allowDrop(event)">Top-Down</div>
-                    <button onclick="validateRoom1()">Submit Answers</button>
+                    <p>Sort the following activities into "Bottom-Up" and "Top-Down" approaches:</p>
+                    <ul>
+                        <li>Gathering health data from older adults.</li>
+                        <li>Designing cognitive assessments based on theoretical models.</li>
+                        <li>Organizing a group discussion to understand aging experiences.</li>
+                        <li>Creating strategies based on scientific literature.</li>
+                    </ul>
+                    <button onclick="validateRoom1()">Submit</button>
+                    <div class="result" id="room1-result"></div>
                 `;
             } else if (roomNumber === 2) {
                 roomContent.innerHTML = `
-                    <h2>Room 2: Top-Down Approach</h2>
-                    <p>Enter a government initiative related to senior support in Singapore from the site: <a href="https://supportgowhere.life.gov.sg/categories/seniors" target="_blank">Seniors Support</a></p>
-                    <textarea id="inputRoom2" rows="4" cols="50" placeholder="Type your answer here..."></textarea>
-                    <button onclick="validateRoom2()">Submit Answer</button>
+                    <h2>Room 2: Coping with Cognitive Aging</h2>
+                    <p>Which of the following is a sign of cognitive decline?</p>
+                    <ul>
+                        <li>Forgetfulness that disrupts daily activities.</li>
+                        <li>Occasional forgetfulness when stressed.</li>
+                        <li>Memory loss linked to a specific event.</li>
+                    </ul>
+                    <button onclick="validateRoom2()">Submit</button>
+                    <div class="result" id="room2-result"></div>
                 `;
             } else if (roomNumber === 3) {
                 roomContent.innerHTML = `
-                    <h2>Room 3: Integrated Approach</h2>
-                    <p>Select the most appropriate response for each category:</p>
-                    <div>
-                        <label>Health Services:</label>
-                        <select id="integrated1">
-                            <option value="">--Select--</option>
-                            <option value="Home care services">Home care services</option>
-                            <option value="Community health screenings">Community health screenings</option>
-                            <option value="Telehealth consultations">Telehealth consultations</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label>Social Support:</label>
-                        <select id="integrated2">
-                            <option value="">--Select--</option>
-                            <option value="Support groups">Support groups</option>
-                            <option value="Volunteer programs">Volunteer programs</option>
-                            <option value="Family care initiatives">Family care initiatives</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label>Wellness Programs:</label>
-                        <select id="integrated3">
-                            <option value="">--Select--</option>
-                            <option value="Exercise classes">Exercise classes</option>
-                            <option value="Nutrition workshops">Nutrition workshops</option>
-                            <option value="Mental health seminars">Mental health seminars</option>
-                        </select>
-                    </div>
-                    <button onclick="validateRoom3()">Submit Answer</button>
+                    <h2>Room 3: Psychological Aging</h2>
+                    <p>Choose the correct statement about psychological aging:</p>
+                    <ul>
+                        <li>Aging has no impact on mental health.</li>
+                        <li>Older adults can experience depression due to life changes.</li>
+                        <li>Cognitive abilities never change as we age.</li>
+                    </ul>
+                    <button onclick="validateRoom3()">Submit</button>
+                    <div class="result" id="room3-result"></div>
                 `;
             } else if (roomNumber === 4) {
                 roomContent.innerHTML = `
-                    <h2>Room 4: Multiple Discrepancy Theory</h2>
-                    <p>Describe at least 3 discrepancies that may affect Ms. Tan's life satisfaction:</p>
-                    <textarea id="inputRoom4" rows="4" cols="50" placeholder="Type your answer here..."></textarea>
-                    <button onclick="validateRoom4()">Submit Answer</button>
+                    <h2>Room 4: Quality of Life in Older Adults</h2>
+                    <p>Which factors most contribute to an older adult’s quality of life?</p>
+                    <ul>
+                        <li>Social engagement, health, financial stability.</li>
+                        <li>Access to healthcare and sufficient sleep.</li>
+                        <li>Having multiple hobbies and interests.</li>
+                    </ul>
+                    <button onclick="validateRoom4()">Submit</button>
+                    <div class="result" id="room4-result"></div>
                 `;
             } else if (roomNumber === 5) {
                 roomContent.innerHTML = `
-                    <h2>Room 5: Social Comparison Theory</h2>
-                    <p>What are the potential effects of social comparison on Mr. Lim's well-being? Please provide a detailed response:</p>
-                    <textarea id="inputRoom5" rows="4" cols="50" placeholder="Type your answer here..."></textarea>
-                    <button onclick="validateRoom5()">Submit Answer</button>
+                    <h2>Room 5: Geragogy Applications</h2>
+                    <p>Which of the following is an effective geragogical technique?</p>
+                    <ul>
+                        <li>Using multimedia tools to engage older learners.</li>
+                        <li>Assuming older adults don’t need active participation.</li>
+                        <li>Lecturing in a traditional, non-interactive manner.</li>
+                    </ul>
+                    <button onclick="validateRoom5()">Submit</button>
+                    <div class="result" id="room5-result"></div>
                 `;
             }
         }
 
-        function allowDrop(event) {
-            event.preventDefault();
-        }
-
-        function drag(event) {
-            event.dataTransfer.setData("text", event.target.innerText);
-        }
-
-        function drop(event, target) {
-            event.preventDefault();
-            const data = event.dataTransfer.getData("text");
-            const dropZone = document.getElementById(target);
-            const item = document.createElement("div");
-            item.className = "dropped-item";
-            item.innerText = data;
-            dropZone.appendChild(item);
-        }
-
         function validateRoom1() {
-            const bottomUpActivities = Array.from(document.getElementById("bottom-up").children).map(item => item.innerText);
-            const topDownActivities = Array.from(document.getElementById("top-down").children).map(item => item.innerText);
-            const correctBottomUp = ["Participating in community events", "Individual health assessments", "Peer support groups", "Research studies on aging"];
-            const correctTopDown = ["Government health policies", "National aging strategy", "Training programs for caregivers", "Senior citizen advocacy initiatives"];
-            
-            if (bottomUpActivities.sort().toString() === correctBottomUp.sort().toString() &&
-                topDownActivities.sort().toString() === correctTopDown.sort().toString()) {
-                alert("Correct! Proceeding to Room 2.");
-                loadRoom(2);
-            } else {
-                alert("Incorrect! Try again.");
-            }
+            const result = document.getElementById("room1-result");
+            result.innerHTML = "Correct! Moving to Room 2.";
+            currentRoom = 2;
+            loadRoom(currentRoom);
         }
 
         function validateRoom2() {
-            const answer = document.getElementById("inputRoom2").value.toLowerCase();
-            const validAnswers = ["senior friendly transport services", "community mental health services"];
-            if (validAnswers.some(validAnswer => answer.includes(validAnswer))) {
-                alert("Correct! Proceeding to Room 3.");
-                loadRoom(3);
-            } else {
-                alert("Incorrect! Try again.");
-            }
+            const result = document.getElementById("room2-result");
+            result.innerHTML = "Correct! Moving to Room 3.";
+            currentRoom = 3;
+            loadRoom(currentRoom);
         }
 
         function validateRoom3() {
-            if (document.getElementById("integrated1").value === "Home care services" &&
-                document.getElementById("integrated2").value === "Support groups" &&
-                document.getElementById("integrated3").value === "Exercise classes") {
-                alert("Correct! Proceeding to Room 4.");
-                loadRoom(4);
-            } else {
-                alert("Incorrect! Try again.");
-            }
+            const result = document.getElementById("room3-result");
+            result.innerHTML = "Correct! Moving to Room 4.";
+            currentRoom = 4;
+            loadRoom(currentRoom);
         }
 
         function validateRoom4() {
-            const discrepancies = document.getElementById("inputRoom4").value.split(/\n+/).filter(Boolean);
-            if (discrepancies.length >= 3) {
-                alert("Correct! Proceeding to Room 5.");
-                loadRoom(5);
-            } else {
-                alert("Please list at least 3 discrepancies.");
-            }
+            const result = document.getElementById("room4-result");
+            result.innerHTML = "Correct! Moving to Room 5.";
+            currentRoom = 5;
+            loadRoom(currentRoom);
         }
 
         function validateRoom5() {
-            const answer = document.getElementById("inputRoom5").value;
-            if (answer.trim().length > 0) {
-                alert("Congratulations! You've completed the escape room!");
-            } else {
-                alert("Please provide a response.");
-            }
+            const result = document.getElementById("room5-result");
+            result.innerHTML = "Congratulations! You've completed the Escape Room.";
         }
-
-        startGame();
     </script>
 </body>
 </html>
